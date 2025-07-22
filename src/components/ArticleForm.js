@@ -18,11 +18,20 @@ function ArticleForm({ onResult }) {
     e.preventDefault();
     setLoading(true);
     setError("");
+
+    // Only send keys that are filled (not empty)
+    const payload = {};
+    if (url.trim()) payload.url = url.trim();
+    if (text.trim()) payload.text = text.trim();
+
+    if (!payload.url && !payload.text) {
+      setError("Please provide a news article link or paste some text.");
+      setLoading(false);
+      return;
+    }
+
     try {
-      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/analyze/", {
-        url: url.trim() || undefined,
-        text: text.trim() || undefined,
-      });
+      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/analyze/", payload);
       onResult(res.data);
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
