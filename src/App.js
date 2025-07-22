@@ -1,39 +1,33 @@
 // src/App.js
+// src/App.js
 import React, { useState } from "react";
 import ArticleForm from "./components/ArticleForm";
 import ArticleResult from "./components/ArticleResult";
 import QueryHistory from "./components/QueryHistory";
-import axios from "axios";
 
 function App() {
   const [result, setResult] = useState(null);
   const [history, setHistory] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  // Set document title/SEO (basic)
+  // For SEO
   React.useEffect(() => {
     document.title = "News Summarizer & Fake News Detector";
-    // You can set meta tags via <meta name="description" ...> in public/index.html
   }, []);
 
-  const handleResult = async (input) => {
-    setLoading(true);
+  // Called by ArticleForm when a result (or error) comes back
+  const handleResult = (data) => {
+    setResult(data);
     setErr("");
-    setResult(null);
-    try {
-      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/analyze/", input);
-      setResult(res.data);
-      setHistory([res.data, ...history]);
-    } catch (e) {
-      let msg = e.response?.data?.error || "Sorry, something went wrong.";
-      if (msg.includes("Could not extract text")) {
-        msg += " Some sites (like paywalled/news) can’t be fetched. Try another link or paste the article text!";
-      }
-      setErr(msg);
-    } finally {
-      setLoading(false);
+    if (data) {
+      setHistory([data, ...history]);
     }
+  };
+
+  const handleError = (msg) => {
+    setErr(msg);
+    setResult(null);
   };
 
   const handleFeedback = async (feedbackData) => {
@@ -55,7 +49,7 @@ function App() {
         <strong>Disclaimer:</strong> This tool uses public AI models for demonstration. Results may be inaccurate. Always check original sources and use your own judgment!
       </div>
       {err && <div className="error-msg">{err}</div>}
-      <ArticleForm onResult={handleResult} loading={loading} />
+      <ArticleForm onResult={handleResult} onError={handleError} setLoading={setLoading} />
       {loading && <div style={{ textAlign: "center", marginTop: 16 }}>🔄 Analyzing article, please wait...</div>}
       {result && <ArticleResult data={result} onFeedback={handleFeedback} />}
       {history.length > 0 && <QueryHistory history={history} />}
@@ -65,4 +59,5 @@ function App() {
     </div>
   );
 }
+
 export default App;

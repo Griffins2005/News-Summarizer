@@ -1,12 +1,11 @@
 // src/components/ArticleForm.js
+// src/components/ArticleForm.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function ArticleForm({ onResult }) {
+function ArticleForm({ onResult, onError, setLoading }) {
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     document.title = "News Summarizer & Fake News Detector";
@@ -17,12 +16,11 @@ function ArticleForm({ onResult }) {
   const submit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
-    onResult(null); // CLEAR previous results on every submit!
+    onResult(null); // Clear previous result
+    onError("");    // Clear previous error
     try {
-      // Validation in frontend before sending:
       if (!url.trim() && !text.trim()) {
-        setError("Please enter a news URL or article text.");
+        onError("Please enter a news URL or article text.");
         setLoading(false);
         return;
       }
@@ -31,14 +29,13 @@ function ArticleForm({ onResult }) {
         text: text.trim() || undefined,
       });
       onResult(res.data);
-      setError(""); // Clear error if successful
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
-        setError(err.response.data.error);
+        onError(err.response.data.error);
       } else {
-        setError("Sorry, something went wrong. Please check your input or try again.");
+        onError("Sorry, something went wrong. Please check your input or try again.");
       }
-      onResult(null); // Clear result if there's an error
+      onResult(null);
     }
     setLoading(false);
   };
@@ -58,10 +55,9 @@ function ArticleForm({ onResult }) {
         onChange={(e) => setText(e.target.value)}
         rows={8}
       />
-      <button disabled={loading}>
-        {loading ? "Analyzing..." : "Analyze"}
+      <button>
+        Analyze
       </button>
-      {error && <div className="error" aria-live="polite">{error}</div>}
     </form>
   );
 }
