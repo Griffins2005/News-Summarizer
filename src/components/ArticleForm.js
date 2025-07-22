@@ -57,6 +57,12 @@ function ArticleForm({ onResult, onError, setLoading, clearInputsFlag }) {
         Always check original sources and use your own judgment.
       </div>
       <form className="article-form" onSubmit={submit} aria-label="Summarize news form">
+        {/* Error goes HERE above inputs */}
+        {error && (
+          <div className="error" aria-live="polite" style={{marginBottom: '6px', marginTop: '-10px'}}>
+            {error}
+          </div>
+        )}
         <input
           type="url"
           placeholder="Paste article URL (optional)"
@@ -76,7 +82,6 @@ function ArticleForm({ onResult, onError, setLoading, clearInputsFlag }) {
         <button disabled={loadingLocal}>
           {loadingLocal ? "Analyzing..." : "Analyze"}
         </button>
-        {error && <div className="error" aria-live="polite">{error}</div>}
       </form>
     </section>
   );
