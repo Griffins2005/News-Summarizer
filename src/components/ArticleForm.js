@@ -5,7 +5,7 @@ import axios from "axios";
 function ArticleForm({ onResult, onError, setLoading, clearInputsFlag }) {
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
-  const [loading, setLoadingLocal] = useState(false);
+  const [loadingLocal, setLoadingLocal] = useState(false); // FIXED NAME
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -56,8 +56,8 @@ function ArticleForm({ onResult, onError, setLoading, clearInputsFlag }) {
         onChange={(e) => setText(e.target.value)}
         rows={8}
       />
-      <button disabled={loading || loadingLocal}>
-        {(loading || loadingLocal) ? "Analyzing..." : "Analyze"}
+      <button disabled={loadingLocal}>
+        {loadingLocal ? "Analyzing..." : "Analyze"}
       </button>
       {error && <div className="error" aria-live="polite">{error}</div>}
     </form>

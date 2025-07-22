@@ -13,13 +13,10 @@ export default function AdminAuth({ onAuth }) {
     setLoading(true);
     setError("");
     try {
-      // Step 1: Get Token
-      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/admin-token/", {
-        username,
-        password,
-      });
+      // 1. Get DRF token
+      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/admin-token/", { username, password });
       const token = res.data.token;
-      // Step 2: Check if user is a Django superuser
+      // 2. Check for superuser
       const check = await axios.post(
         "https://news-summarizer-ai-backend.onrender.com/api/admin-check/",
         {},
@@ -32,11 +29,9 @@ export default function AdminAuth({ onAuth }) {
         setError("You do not have admin privileges.");
       }
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        setError(err.response.data.error);
-      } else {
-        setError("Login failed. Invalid credentials or not a superuser.");
-      }
+      setError(
+        err?.response?.data?.error || "Login failed. Invalid credentials or not a superuser."
+      );
     }
     setLoading(false);
   };

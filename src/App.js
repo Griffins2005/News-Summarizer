@@ -53,7 +53,6 @@ function App() {
       {loading && <div style={{ textAlign: "center", marginTop: 16 }}>🔄 Analyzing article, please wait...</div>}
       {result && <ArticleResult data={result} onFeedback={handleFeedback} />}
       {history.length > 0 && <QueryHistory history={history} />}
-      {/* ...footer */}
     </div>
   );
 }
