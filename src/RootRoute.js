@@ -39,17 +39,14 @@ function RootRoutes() {
       setChecking(false);
     }
     verifyToken();
-    // Dependency allows for re-login check (e.g. if token changes)
   }, [auth]);
 
-  // Handle successful login from AdminAuth
   const handleAuth = (token) => {
     window.localStorage.setItem("adminToken", token);
     setAuth(true);
-    setUnauthorized(false); // Clear any prior error
+    setUnauthorized(false);
   };
 
-  // Handle logout from admin pages
   const handleLogout = () => {
     window.localStorage.removeItem("adminToken");
     setAuth(false);
