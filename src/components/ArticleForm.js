@@ -18,29 +18,27 @@ function ArticleForm({ onResult }) {
     e.preventDefault();
     setLoading(true);
     setError("");
-
-    // Only send keys that are filled (not empty)
-    const payload = {};
-    if (url.trim()) payload.url = url.trim();
-    if (text.trim()) payload.text = text.trim();
-
-    if (!payload.url && !payload.text) {
-      setError("Please provide a news article link or paste some text.");
-      setLoading(false);
-      return;
-    }
-
+    onResult(null); // CLEAR previous results on every submit!
     try {
-      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/analyze/", payload);
+      // Validation in frontend before sending:
+      if (!url.trim() && !text.trim()) {
+        setError("Please enter a news URL or article text.");
+        setLoading(false);
+        return;
+      }
+      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/analyze/", {
+        url: url.trim() || undefined,
+        text: text.trim() || undefined,
+      });
       onResult(res.data);
+      setError(""); // Clear error if successful
     } catch (err) {
       if (err.response && err.response.data && err.response.data.error) {
         setError(err.response.data.error);
       } else {
-        setError(
-          "Sorry, something went wrong. Please check your input or try again."
-        );
+        setError("Sorry, something went wrong. Please check your input or try again.");
       }
+      onResult(null); // Clear result if there's an error
     }
     setLoading(false);
   };
