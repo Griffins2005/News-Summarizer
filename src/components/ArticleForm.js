@@ -1,11 +1,19 @@
 // src/components/ArticleForm.js
-// src/components/ArticleForm.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function ArticleForm({ onResult, onError, setLoading }) {
+function ArticleForm({ onResult, onError, setLoading, clearInputsFlag }) {
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
+  const [loading, setLoadingLocal] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (clearInputsFlag) {
+      setUrl("");
+      setText("");
+    }
+  }, [clearInputsFlag]);
 
   useEffect(() => {
     document.title = "News Summarizer & Fake News Detector";
@@ -15,29 +23,22 @@ function ArticleForm({ onResult, onError, setLoading }) {
 
   const submit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    onResult(null); // Clear previous result
-    onError("");    // Clear previous error
+    setLoading?.(true);
+    setLoadingLocal(true);
+    setError("");
     try {
-      if (!url.trim() && !text.trim()) {
-        onError("Please enter a news URL or article text.");
-        setLoading(false);
-        return;
-      }
       const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/analyze/", {
         url: url.trim() || undefined,
         text: text.trim() || undefined,
       });
       onResult(res.data);
     } catch (err) {
-      if (err.response && err.response.data && err.response.data.error) {
-        onError(err.response.data.error);
-      } else {
-        onError("Sorry, something went wrong. Please check your input or try again.");
-      }
-      onResult(null);
+      const msg = err.response?.data?.error || "Sorry, something went wrong. Please check your input or try again.";
+      setError(msg);
+      onError?.(msg);
     }
-    setLoading(false);
+    setLoading?.(false);
+    setLoadingLocal(false);
   };
 
   return (
@@ -55,9 +56,10 @@ function ArticleForm({ onResult, onError, setLoading }) {
         onChange={(e) => setText(e.target.value)}
         rows={8}
       />
-      <button>
-        Analyze
+      <button disabled={loading || loadingLocal}>
+        {(loading || loadingLocal) ? "Analyzing..." : "Analyze"}
       </button>
+      {error && <div className="error" aria-live="polite">{error}</div>}
     </form>
   );
 }
