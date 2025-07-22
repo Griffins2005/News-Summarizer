@@ -1,9 +1,9 @@
 // src/App.js
-// src/App.js
 import React, { useState } from "react";
 import ArticleForm from "./components/ArticleForm";
 import ArticleResult from "./components/ArticleResult";
 import QueryHistory from "./components/QueryHistory";
+import axios from "axios"; 
 
 function App() {
   const [result, setResult] = useState(null);
@@ -11,12 +11,10 @@ function App() {
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // For SEO
   React.useEffect(() => {
     document.title = "News Summarizer & Fake News Detector";
   }, []);
 
-  // Called by ArticleForm when a result (or error) comes back
   const handleResult = (data) => {
     setResult(data);
     setErr("");
