@@ -337,3 +337,40 @@ header h1 {
     grid-template-columns: 1fr;
   }
 }
+
+.article-form-section {
+  margin-top: 18px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.article-form-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2e355c;
+  margin: 0 0 7px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  letter-spacing: -.5px;
+}
+.article-form-title .emoji {
+  font-size: 1.7em;
+  vertical-align: middle;
+}
+.article-form-desc {
+  color: #3e4c7b;
+  font-size: 1.09rem;
+  margin-bottom: 16px;
+  margin-top: 0;
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+.disclaimer {
+  background: #fff3c1;
+  color: #a06a06;
+  padding: 13px;
+  border-radius: 7px;
+  margin-bottom: 18px;
+  font-size: 1.01rem;
+}
