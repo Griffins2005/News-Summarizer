@@ -21,8 +21,8 @@ function AdminDashboard({ onLogout }) {
       setLoading(true);
       try {
         const [q, f] = await Promise.all([
-          axios.get("http://127.0.0.1:8000/api/all-history/", { headers: { Authorization: `Token ${localStorage.getItem("adminToken")}` } }),
-          axios.get("http://127.0.0.1:8000/api/all-feedback/", { headers: { Authorization: `Token ${localStorage.getItem("adminToken")}` } }),
+          axios.get("https://news-summarizer-ai-backend.onrender.com/api/all-history/", { headers: { Authorization: `Token ${localStorage.getItem("adminToken")}` } }),
+          axios.get("https://news-summarizer-ai-backend.onrender.com/api/all-feedback/", { headers: { Authorization: `Token ${localStorage.getItem("adminToken")}` } }),
         ]);
         setStats({
           queries: q.data.length,

@@ -29,7 +29,7 @@ export default function AdminHistory() {
     document.head.appendChild(meta);
 
     if (auth) {
-      axios.get("http://127.0.0.1:8000/api/all-history/", {
+      axios.get("https://news-summarizer-ai-backend.onrender.com/api/all-history/", {
         headers: { Authorization: `Token ${localStorage.getItem("adminToken")}` }
       })
       .then(res => setHistory(res.data))

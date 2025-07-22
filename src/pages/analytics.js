@@ -26,10 +26,10 @@ export default function AdminAnalytics({ onLogout }) {
       try {
         const token = localStorage.getItem("adminToken");
         const [h, f] = await Promise.all([
-          axios.get("http://127.0.0.1:8000/api/all-history/", {
+          axios.get("https://news-summarizer-ai-backend.onrender.com/api/all-history/", {
             headers: { Authorization: `Token ${token}` },
           }),
-          axios.get("http://127.0.0.1:8000/api/all-feedback/", {
+          axios.get("https://news-summarizer-ai-backend.onrender.com/api/all-feedback/", {
             headers: { Authorization: `Token ${token}` },
           }),
         ]);

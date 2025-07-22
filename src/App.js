@@ -22,7 +22,7 @@ function App() {
     setErr("");
     setResult(null);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/analyze/", input);
+      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/analyze/", input);
       setResult(res.data);
       setHistory([res.data, ...history]);
     } catch (e) {
@@ -38,7 +38,7 @@ function App() {
 
   const handleFeedback = async (feedbackData) => {
     try {
-      await axios.post("http://127.0.0.1:8000/api/feedback/", feedbackData);
+      await axios.post("https://news-summarizer-ai-backend.onrender.com/api/feedback/", feedbackData);
       alert("Thanks for your feedback!");
     } catch {
       alert("Could not send feedback. Please try again later.");

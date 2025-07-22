@@ -19,7 +19,7 @@ function ArticleForm({ onResult }) {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/analyze/", {
+      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/analyze/", {
         url: url.trim() || undefined,
         text: text.trim() || undefined,
       });

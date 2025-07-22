@@ -11,7 +11,7 @@ export default function AdminAuth({ onAuth }) {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/admin-token/", {
+      const res = await axios.post("https://news-summarizer-ai-backend.onrender.com/api/admin-token/", {
         username,
         password,
       });
