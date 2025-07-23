@@ -1,4 +1,94 @@
-<<<<<<< HEAD
+# News Summarizer & Fake News Detector — Frontend
+
+This is the **React frontend** for the News Summarizer & Fake News Detector platform. Instantly summarize news articles and check their credibility with AI.
+
+---
+
+## 🌟 Project Overview
+
+- Paste a news link or article text
+- Get AI-powered summaries & credibility checks
+- User-friendly, fast, and mobile-responsive UI
+- Admin dashboard for analytics & user feedback
+- Works seamlessly with our Django backend API
+
+---
+
+## ✨ Features
+
+- Summarize by URL or pasted text
+- Detect likely fake news (AI-powered)
+- View history of recent queries
+- Admin-only analytics, feedback, and logs
+- Secure admin authentication
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Clone the Repo
+
+```bash
+git clone https://github.com/Griffins2005/News-Summarizer.git
+cd News-Summarizer
+2. Install Dependencies
+bash
+Copy
+Edit
+npm install
+3. Run in Development
+bash
+Copy
+Edit
+npm start
+Visit: http://localhost:3000
+
+🏗️ Build for Production
+bash
+Copy
+Edit
+npm run build
+The optimized static site will be in the /build directory.
+
+🚀 Deployment
+Static Hosting (Render, Netlify, Vercel, etc):
+
+Set build command:
+
+bash
+Copy
+Edit
+npm install && npm run build && cp public/static.json build/
+Set publish directory to:
+
+nginx
+Copy
+Edit
+build
+[Optional] Add a public/static.json for SPA routing on Render.
+
+🔐 Admin Dashboard
+Go to /admin for login (uses Django superuser credentials)
+
+Requires backend running and accessible
+
+Access analytics at /admin/analytics, feedback at /admin/feedback, history at /admin/history
+
+⚡ Backend API
+The backend must be running!
+See setup guide:
+https://github.com/Griffins2005/News-Summarizer-Backend
+
+📝 License
+MIT
+
+Built by Griffins Kiptanui Lelgut
+
+yaml
+Copy
+Edit
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
